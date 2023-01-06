@@ -8,6 +8,7 @@ public interface EpisodeModelBuilder {
     void setSubtitle(String subtitle);
     void setDescription(String description);
     void setImageURL(String imageURL);
+    void setProgramName(String programName);
     void setStartTime(Instant startTime);
     void setEndTime(Instant endTime);
     EpisodeModel build();

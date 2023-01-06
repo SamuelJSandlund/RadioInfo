@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="73aac2f5-937b-4dcb-bf86-e126077ba5f0" name="Changes" comment="Initial commit">
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/APIHandler.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/ChannelModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/EpisodeModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/EpisodeModelBuilder.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/RadioInfoGUI.java" afterDir="false" />
+    <list default="true" id="73aac2f5-937b-4dcb-bf86-e126077ba5f0" name="Changes" comment="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller">
+      <change afterPath="$PROJECT_DIR$/src/models/EpisodeListCache.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/RadioChannelTableModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/models/XMLParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/APIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/APIHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/EpisodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EpisodeModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/EpisodeModelBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EpisodeModelBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/RadioInfoGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RadioInfoGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,15 +38,16 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "E:/Programming/IdeaProjects/Reference/JTableExample",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -74,7 +77,13 @@
       <option name="presentableId" value="LOCAL−00001" />
       <updated>1672670335071</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL−00002" summary="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller">
+      <created>1672957675205</created>
+      <option name="number" value="LOCAL−00002" />
+      <option name="presentableId" value="LOCAL−00002" />
+      <updated>1672957675205</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -90,7 +99,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial commit" />
+    <MESSAGE value="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

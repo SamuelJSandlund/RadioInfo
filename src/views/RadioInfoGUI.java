@@ -2,56 +2,39 @@ package views;
 
 import controllers.RadioInfoContoller;
 import models.ChannelModel;
+import models.RadioChannelTableModel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.*;
 
 public class RadioInfoGUI {
     private RadioInfoContoller currentController;
     private List<ChannelModel> channelList;
-    private JPanel contentPanel;
 
-    private CardLayout contentCardLayout;
+    private JFrame window;
+    private JPanel contentPanel;
+    private JPanel tablePanel;
+    private JTable channelTable;
     private JMenu channelsMenu;
-    private JMenu p2Menu;
-    private JMenu p3Menu;
-    private JMenu p4Menu;
-    private JMenu srMenu;
+
+
 
     public RadioInfoGUI(List<ChannelModel> channelList){
         this.channelList = channelList;
-        JFrame window = new JFrame();
-        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        window.setSize(680, 480);
-        window.setLayout(new BorderLayout());
+        initWindow();
         contentPanel = new JPanel();
-        contentCardLayout = new CardLayout();
-        contentPanel.setLayout(contentCardLayout);
+        contentPanel.setLayout(new BorderLayout());
         window.add(contentPanel, BorderLayout.CENTER);
         JPanel greetingScreen = new JPanel();
         greetingScreen.add(new JLabel("Välj kanal i menyn!"));
-        contentPanel.add(greetingScreen, "HELLO");
-        contentCardLayout.show(contentPanel, "HELLO");
+        contentPanel.add(greetingScreen);
         JMenuBar menuBar = new JMenuBar();
-        channelsMenu = new JMenu("Kanaler");
-        p2Menu = new JMenu("P2");
-        p3Menu = new JMenu("P3");
-        p4Menu = new JMenu("P4");
-        srMenu = new JMenu("SR");
-        updateChannelList();
-        channelsMenu.addSeparator();
-        channelsMenu.add(p2Menu);
-        channelsMenu.add(p3Menu);
-        channelsMenu.add(p4Menu);
-        channelsMenu.add(srMenu);
-
+        initChannelMenu();
         JMenu settingsMenu = new JMenu("Inställningar");
-
         menuBar.add(channelsMenu);
         menuBar.add(settingsMenu);
+
         window.add(menuBar, BorderLayout.NORTH);
 
         window.setVisible(true);
@@ -61,18 +44,69 @@ public class RadioInfoGUI {
         currentController = controller;
     }
 
-    public void showChannel(String channelName){
-        contentCardLayout.show(contentPanel, channelName);
+    public void clear(){
+        clearContentPanel();
     }
 
-    private void updateChannelList(){
+    private void clearContentPanel(){
+        Component[] components = contentPanel.getComponents();
+        for(Component c : components){
+            contentPanel.remove(c);
+        }
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+
+    public void setCurrentChannel(RadioChannelTableModel channelTableModel){
+        buildChannelTablePanel(channelTableModel);
+        showChannelTable();
+    }
+
+    private void buildChannelTablePanel(RadioChannelTableModel channelTableModel){
+        tablePanel = new JPanel();
+        tablePanel.setLayout(new BorderLayout());
+        if(channelTableModel.isEmpty()){
+            JLabel message = new JLabel("Kanalen har inga planerade sändningar");
+            tablePanel.add(message);
+        }
+        else {
+            channelTable = new JTable(channelTableModel);
+            JScrollPane scrollPane = new JScrollPane(channelTable);
+            tablePanel.add(scrollPane, BorderLayout.CENTER);
+            JButton updateButton = new JButton("Uppdatera");
+            updateButton.addActionListener(e -> currentController.updateEpisodeLists());
+            JPanel buttonPanel = new JPanel();
+            buttonPanel.add(updateButton);
+            tablePanel.add(buttonPanel, BorderLayout.SOUTH);
+        }
+    }
+
+    private void showChannelTable(){
+        clearContentPanel();
+        contentPanel.add(tablePanel);
+        contentPanel.revalidate();
+        contentPanel.repaint();
+    }
+
+    private void initWindow() {
+        window = new JFrame("RadioInfo");
+        window.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        window.setSize(680, 500);
+        window.setLayout(new BorderLayout());
+    }
+
+    private void initChannelMenu(){
+        channelsMenu = new JMenu("Kanaler");
+        JMenu p2Menu = new JMenu("P2");
+        JMenu p3Menu = new JMenu("P3");
+        JMenu p4Menu = new JMenu("P4");
+        JMenu srMenu = new JMenu("SR");
         for(ChannelModel c : channelList){
+
+            //add the channel to the menu
             JMenuItem item = new JMenuItem(c.getName());
-            JPanel channelPanel = new JPanel();
-            channelPanel.add(new JLabel(c.getName()));
-            contentPanel.add(channelPanel, c.getName());
-            item.addActionListener(e -> currentController.getChannelSchedule(c));
-            //sortera kanaler utifrån början på namn
+            item.addActionListener(e -> currentController.getScheduledEpisodes(c));
+            //sort channels in menu by start of name
             switch (c.getName().substring(0, 2)) {
                 case "P2" -> p2Menu.add(item);
                 case "P3" -> p3Menu.add(item);
@@ -81,5 +115,10 @@ public class RadioInfoGUI {
                 default -> channelsMenu.add(item);
             }
         }
+        channelsMenu.addSeparator();
+        channelsMenu.add(p2Menu);
+        channelsMenu.add(p3Menu);
+        channelsMenu.add(p4Menu);
+        channelsMenu.add(srMenu);
     }
 }

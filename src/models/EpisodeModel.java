@@ -11,8 +11,11 @@ public class EpisodeModel {
     private final String description;
     private final String imageURL;
 
+    private final String programName;
+
     private final Instant startTime;
     private final Instant endTime;
+
 
     private EpisodeModel(Builder builder){
         this.id = builder.id;
@@ -22,9 +25,17 @@ public class EpisodeModel {
         this.imageURL = builder.imageURL;
         this.startTime = builder.startTime;
         this.endTime = builder.endTime;
+        this.programName = builder.programName;
     }
 
-    public EpisodeModel(int id, String title, String subTitle, String description, String imageURL, Instant startTime, Instant endTime){
+    public EpisodeModel(int id,
+                        String title,
+                        String subTitle,
+                        String description,
+                        String imageURL,
+                        String programName,
+                        Instant startTime,
+                        Instant endTime){
         this.id = id;
         this.title = title;
         this.subTitle = subTitle;
@@ -32,6 +43,7 @@ public class EpisodeModel {
         this.imageURL = imageURL;
         this.startTime = startTime;
         this.endTime = endTime;
+        this.programName = programName;
     }
 
     public int getId(){
@@ -53,16 +65,16 @@ public class EpisodeModel {
     public Instant getEndTime(){
         return endTime;
     }
+    public String getProgramName(){return programName;}
 
 
     public static class Builder implements EpisodeModelBuilder{
         private int id;
-
         private String title = "";
         private String subTitle = "";
         private String description = "";
         private String imageURL = "";
-
+        private String programName = "";
         private Instant startTime = null;
         private Instant endTime = null;
 
@@ -102,6 +114,10 @@ public class EpisodeModel {
             this.endTime = endTime;
         }
 
+        @Override
+        public void setProgramName(String programName){
+            this.programName = programName;
+        }
         @Override
         public EpisodeModel build() {
             return new EpisodeModel(this);
