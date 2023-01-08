@@ -5,12 +5,21 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import javax.print.Doc;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class used to parse models for radio channels and episodes from XML documents
+ * from the Swedish public radio API
+ */
 public class XMLParser {
+
+    /**
+     * Parses models for radio channels from the given list of documents
+     * @param documentList XML documents from the Swedish public radio API
+     * @return a list of ChannelModels, if no channels could be parsed this list is empty.
+     */
     public List<ChannelModel> parseChannels(List<Document> documentList){
         ArrayList<ChannelModel> results = new ArrayList<>();
         //parse channel models from all documents
@@ -30,7 +39,13 @@ public class XMLParser {
         return results;
     }
 
+    /**
+     * Parses models for radio-program-episodes from the given list of documents
+     * @param documentList XML documents from the Swedish public radio API
+     * @return a list of EpisodeModels, if no episodes could be parsed this list is empty.
+     */
     public List<EpisodeModel> parseEpisodes(List<Document> documentList){
+        APIHandler imageFetcher = new APIHandler();
         ArrayList<EpisodeModel> results = new ArrayList<>();
         for(Document d : documentList){
             NodeList episodeList = d.getElementsByTagName("scheduledepisode");
@@ -52,10 +67,10 @@ public class XMLParser {
                         case "description" -> episodeBuilder.setDescription(episodeInfo.getTextContent());
                         case "starttimeutc" -> episodeBuilder.setStartTime(Instant.parse(episodeInfo.getTextContent()));
                         case "endtimeutc" -> episodeBuilder.setEndTime(Instant.parse(episodeInfo.getTextContent()));
-                        case "imageurl" -> episodeBuilder.setImageURL(episodeInfo.getTextContent());
+                        case "imageurl" -> episodeBuilder.setImage(imageFetcher.getImage(episodeInfo.getTextContent()));
                         case "program" -> episodeBuilder.setProgramName(episodeInfo.getAttribute("name"));
                         default -> {
-                            continue;//skip attributes we are not interested in
+                            continue;//skip other attributes
                         }
                     }
                 }

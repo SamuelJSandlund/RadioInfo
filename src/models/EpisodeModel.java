@@ -1,18 +1,21 @@
 package models;
 
-
+import javax.swing.*;
 import java.time.Instant;
 
+/**
+ * Representation of a radio program from the Swedish public radio
+ * @author Samuel Sandlund
+ * @version 1.0
+ * @since 2023-01-08
+ */
 public class EpisodeModel {
     private final int id;
-
     private final String title;
     private final String subTitle;
     private final String description;
-    private final String imageURL;
-
+    private final ImageIcon image;
     private final String programName;
-
     private final Instant startTime;
     private final Instant endTime;
 
@@ -22,7 +25,7 @@ public class EpisodeModel {
         this.title = builder.title;
         this.subTitle = builder.subTitle;
         this.description = builder.description;
-        this.imageURL = builder.imageURL;
+        this.image = builder.image;
         this.startTime = builder.startTime;
         this.endTime = builder.endTime;
         this.programName = builder.programName;
@@ -32,7 +35,7 @@ public class EpisodeModel {
                         String title,
                         String subTitle,
                         String description,
-                        String imageURL,
+                        ImageIcon image,
                         String programName,
                         Instant startTime,
                         Instant endTime){
@@ -40,31 +43,62 @@ public class EpisodeModel {
         this.title = title;
         this.subTitle = subTitle;
         this.description = description;
-        this.imageURL = imageURL;
+        this.image = image;
         this.startTime = startTime;
         this.endTime = endTime;
         this.programName = programName;
     }
 
+    /**
+     * @return the id of this episode
+     */
     public int getId(){
         return id;
     }
+
+    /**
+     * @return the title of this episode
+     */
     public String getTitle(){
         return title;
     }
+
+    /**
+     * @return the subtitle of this episode
+     */
     public String getSubTitle() {
         return subTitle;
     }
+
+    /**
+     * @return a description of this episode
+     */
     public String getDescription(){
         return description;
     }
-    public String getImageURL(){return description;}
+
+    /**
+     * @return the cover image for this episode
+     */
+    public ImageIcon getImage(){return image;}
+
+    /**
+     * @return the time (UTC) at which the broadcast starts
+     */
     public Instant getStartTime(){
         return startTime;
     }
+
+    /**
+     * @return the time (UTC) at which the broadcast ends
+     */
     public Instant getEndTime(){
         return endTime;
     }
+
+    /**
+     * @return the name of the program that this episode is a part of
+     */
     public String getProgramName(){return programName;}
 
 
@@ -73,7 +107,7 @@ public class EpisodeModel {
         private String title = "";
         private String subTitle = "";
         private String description = "";
-        private String imageURL = "";
+        private ImageIcon image = null;
         private String programName = "";
         private Instant startTime = null;
         private Instant endTime = null;
@@ -100,8 +134,8 @@ public class EpisodeModel {
         }
 
         @Override
-        public void setImageURL(String imageURL) {
-            this.imageURL = imageURL;
+        public void setImage(ImageIcon image) {
+            this.image = image;
         }
 
         @Override
@@ -118,6 +152,7 @@ public class EpisodeModel {
         public void setProgramName(String programName){
             this.programName = programName;
         }
+
         @Override
         public EpisodeModel build() {
             return new EpisodeModel(this);

@@ -1,16 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="RadioInfo:jar" />
+    </artifacts-to-build>
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="73aac2f5-937b-4dcb-bf86-e126077ba5f0" name="Changes" comment="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller">
-      <change afterPath="$PROJECT_DIR$/src/models/EpisodeListCache.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/RadioChannelTableModel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/XMLParser.java" afterDir="false" />
+    <list default="true" id="73aac2f5-937b-4dcb-bf86-e126077ba5f0" name="Changes" comment="Added table and tablemodel to GUI, added button for manual updates">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controllers/RadioInfoContoller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/controllers/RadioInfoController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/APIHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/APIHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/ChannelModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/ChannelModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/EpisodeListCache.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EpisodeListCache.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/EpisodeModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EpisodeModel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/models/EpisodeModelBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/EpisodeModelBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/RadioChannelTableModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/RadioChannelTableModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/XMLParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/XMLParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/RadioInfoGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/RadioInfoGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -32,6 +38,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2Jm4nZPVXGniSwMOVkgZ1G6JurP" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -42,10 +51,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "E:/Programming/IdeaProjects/Reference/JTableExample",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0"
+    "last_opened_file_path": "C:/Users/Samuel/Desktop",
+    "project.structure.last.edited": "Artifacts",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
 }]]></component>
   <component name="RunManager">
@@ -83,7 +92,13 @@
       <option name="presentableId" value="LOCAL−00002" />
       <updated>1672957675205</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL−00003" summary="Added table and tablemodel to GUI, added button for manual updates">
+      <created>1673047941533</created>
+      <option name="number" value="LOCAL−00003" />
+      <option name="presentableId" value="LOCAL−00003" />
+      <updated>1673047941533</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -100,7 +115,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial commit" />
     <MESSAGE value="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added models to fetch and parse data from the SR API (separate these models later)&#10;Created basic view and controller" />
+    <MESSAGE value="Added table and tablemodel to GUI, added button for manual updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added table and tablemodel to GUI, added button for manual updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
