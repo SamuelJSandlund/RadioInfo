@@ -1,6 +1,6 @@
 package models;
 
-import javax.swing.*;
+import java.awt.*;
 import java.time.Instant;
 
 /**
@@ -11,7 +11,7 @@ public interface EpisodeModelBuilder {
     void setTitle(String title);
     void setSubtitle(String subtitle);
     void setDescription(String description);
-    void setImage(ImageIcon image);
+    void setImage(Image image);
     void setProgramName(String programName);
     void setStartTime(Instant startTime);
     void setEndTime(Instant endTime);

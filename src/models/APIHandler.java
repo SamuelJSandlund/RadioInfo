@@ -7,7 +7,6 @@ import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -26,8 +25,8 @@ import java.util.List;
 /**
  * Handles all interaction between the application and the Swedish public radio API
  * @author Samuel Sandlund
- * @version 1.0
- * @since 2023-01-08
+ * @version 1.1 getImage return type changed from ImageIcon to abstract Image
+ * @since 2023-02-07
  */
 public class APIHandler {
     private String errorMessage = "ERROR: ";
@@ -174,10 +173,10 @@ public class APIHandler {
      * @param url link to the image
      * @return ImageIcon or null if the image could not be accessed
      */
-    public ImageIcon getImage(String url){
+    public Image getImage(String url){
         try{
-            return new ImageIcon(ImageIO.read(new URL(url)).
-                    getScaledInstance(100, 100, Image.SCALE_SMOOTH));
+            return ImageIO.read(new URL(url)).
+                    getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         }catch (IOException e) {
             return null; //skip the image if it could not be accessed
         }

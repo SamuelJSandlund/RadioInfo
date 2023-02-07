@@ -6,20 +6,21 @@ import models.EpisodeModel;
 import models.RadioChannelTableModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.awt.*;
 
 /**
  * A user interface for the RadioInfo application
  * @author Samuel Sandlund
- * @version 1.0
- * @since 2023-01-08
+ * @version 2.0
+ * @since 2023-02-07
  */
 public class RadioInfoGUI {
     private RadioInfoController currentController;
     private final List<ChannelModel> channelList;
+    private ChannelModel currentChannel;
     private JFrame window;
     private JPanel contentPanel;
     private JPanel tablePanel;
@@ -55,19 +56,6 @@ public class RadioInfoGUI {
     }
 
     /**
-     * Removes all components from the contentPanel
-     * Used by other methods to update the information on the screen
-     */
-    private void clearContentPanel(){
-        Component[] components = contentPanel.getComponents();
-        for(Component c : components){
-            contentPanel.remove(c);
-        }
-        contentPanel.revalidate();
-        contentPanel.repaint();
-    }
-
-    /**
      * Shows a dialogue box with the given message
      * @param message a string with the text to show in the dialogue box
      */
@@ -86,11 +74,13 @@ public class RadioInfoGUI {
     }
 
     /**
-     * Sets displays information from the given RadioChannelTableModel
-     * @param channelTableModel
+     * Sets the content panel to display information about a given radio channel
+     * @param channel ChannelModel for the channel to show
+     * @param episodes List of current episodes on the channel
      */
-    public void setCurrentChannel(RadioChannelTableModel channelTableModel){
-        buildChannelTablePanel(channelTableModel);
+    public void setCurrentChannel(ChannelModel channel, List<EpisodeModel> episodes){
+        currentChannel = channel;
+        buildChannelTablePanel(channel, episodes);
         showChannelTable();
     }
 
@@ -106,7 +96,7 @@ public class RadioInfoGUI {
         JLabel title = new JLabel("Radio info", SwingConstants.CENTER);
         title.setFont(new Font("Title", Font.PLAIN, 20));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        JLabel message = new JLabel("För att komma igång välj en kanal i menyn uppe till höger");
+        JLabel message = new JLabel("För att komma igång välj en kanal i menyn uppe till vänster");
         JLabel instruction = new JLabel("Radio -> Välj kanal");
         message.setAlignmentX(Component.CENTER_ALIGNMENT);
         instruction.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -121,13 +111,24 @@ public class RadioInfoGUI {
     }
 
     /**
-     * Sets the table panel to show information from the given channelTableModel
-     * @param channelTableModel table model for the channel
+     * If a current channel has been set: updates list of episodes and re-renders information in the content panel
      */
-    private void buildChannelTablePanel(RadioChannelTableModel channelTableModel){
+    public void updateCurrentChannel(){
+        if(currentChannel != null){
+            currentController.getScheduledEpisodes(currentChannel);
+        }
+    }
+
+    /**
+     * Sets the table panel to show information from the given channelTableModel
+     * @param channel ChannelModel for the channel to show
+     * @param episodes List of current episodes on the channel
+     */
+    private void buildChannelTablePanel(ChannelModel channel, List<EpisodeModel> episodes){
+        RadioChannelTableModel channelTableModel = new RadioChannelTableModel(episodes);
         tablePanel = new JPanel();
         tablePanel.setLayout(new BorderLayout());
-        JLabel name = new JLabel(channelTableModel.getChannelName(), SwingConstants.CENTER);
+        JLabel name = new JLabel(channel.getName(), SwingConstants.CENTER);
         name.setFont(new Font("Title", Font.PLAIN, 20));
         tablePanel.add(name, BorderLayout.NORTH);
         if(channelTableModel.isEmpty()){
@@ -140,7 +141,9 @@ public class RadioInfoGUI {
                 int selectedRow = programTable.getSelectedRow();
                 if(selectedRow >= 0 && selectedRow < programTable.getRowCount()){
                     EpisodeModel episode = channelTableModel.getEpisode(selectedRow);
-                    showEpisodeInfo(episode);
+                    if(!e.getValueIsAdjusting()){
+                        showEpisodeInfo(episode);
+                    }
                 }
             });
             JScrollPane scrollPane = new JScrollPane(programTable);
@@ -153,13 +156,18 @@ public class RadioInfoGUI {
      * @param episode episode to display information about
      */
     private void showEpisodeInfo(EpisodeModel episode){
+        JFrame infoFrame = new JFrame();
+        infoFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        infoFrame.setSize(420, 400);
         JPanel episodeInfoPanel = new JPanel(new BorderLayout());
         JPanel boxPanel = new JPanel();
         boxPanel.setLayout(new BoxLayout(boxPanel, BoxLayout.Y_AXIS));
         boxPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel icon = new JLabel();
-        icon.setIcon(episode.getImage());
+        if(episode.getImage() != null){
+            icon.setIcon(new ImageIcon(episode.getImage()));
+        }
         icon.setAlignmentX(Component.CENTER_ALIGNMENT);
         boxPanel.add(icon);
 
@@ -185,18 +193,10 @@ public class RadioInfoGUI {
         broadcastTime.setAlignmentX(Component.CENTER_ALIGNMENT);
         boxPanel.add(broadcastTimeLabel);
         boxPanel.add(broadcastTime);
-
         episodeInfoPanel.add(boxPanel, BorderLayout.CENTER);
-        JPanel buttonPanel = new JPanel();
-        JButton returnButton = new JButton("Tillbaka");
-        returnButton.addActionListener(e -> showChannelTable());
-        buttonPanel.add(returnButton);
-        episodeInfoPanel.add(buttonPanel, BorderLayout.SOUTH);
 
-        clearContentPanel();
-        contentPanel.add(episodeInfoPanel);
-        contentPanel.revalidate();
-        contentPanel.repaint();
+        infoFrame.add(episodeInfoPanel);
+        infoFrame.setVisible(true);
     }
 
     /**
@@ -243,7 +243,6 @@ public class RadioInfoGUI {
         JMenu p4Menu = new JMenu("P4");
         JMenu srMenu = new JMenu("SR");
         for(ChannelModel c : channelList){
-
             //add the channel to the menu
             JMenuItem item = new JMenuItem(c.getName());
             item.addActionListener(e -> currentController.getScheduledEpisodes(c));
@@ -270,5 +269,18 @@ public class RadioInfoGUI {
         loadingScreen = new JPanel(new BorderLayout());
         JLabel loadingText = new JLabel("Hämtar kanaldata från SR...", SwingConstants.CENTER);
         loadingScreen.add(loadingText, BorderLayout.CENTER);
+    }
+
+    /**
+     * Removes all components from the contentPanel
+     * Used by other methods to update the information on the screen
+     */
+    private void clearContentPanel(){
+        Component[] components = contentPanel.getComponents();
+        for(Component c : components){
+            contentPanel.remove(c);
+        }
+        contentPanel.revalidate();
+        contentPanel.repaint();
     }
 }

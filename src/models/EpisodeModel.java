@@ -1,20 +1,20 @@
 package models;
 
-import javax.swing.*;
+import java.awt.*;
 import java.time.Instant;
 
 /**
  * Representation of a radio program from the Swedish public radio
  * @author Samuel Sandlund
- * @version 1.0
- * @since 2023-01-08
+ * @version 1.1 image type changed from swing ImageIcon to abstract Image
+ * @since 2023-02-07
  */
 public class EpisodeModel {
     private final int id;
     private final String title;
     private final String subTitle;
     private final String description;
-    private final ImageIcon image;
+    private final Image image;
     private final String programName;
     private final Instant startTime;
     private final Instant endTime;
@@ -35,7 +35,7 @@ public class EpisodeModel {
                         String title,
                         String subTitle,
                         String description,
-                        ImageIcon image,
+                        Image image,
                         String programName,
                         Instant startTime,
                         Instant endTime){
@@ -80,7 +80,7 @@ public class EpisodeModel {
     /**
      * @return the cover image for this episode
      */
-    public ImageIcon getImage(){return image;}
+    public Image getImage(){return image;}
 
     /**
      * @return the time (UTC) at which the broadcast starts
@@ -107,7 +107,7 @@ public class EpisodeModel {
         private String title = "";
         private String subTitle = "";
         private String description = "";
-        private ImageIcon image = null;
+        private Image image = null;
         private String programName = "";
         private Instant startTime = null;
         private Instant endTime = null;
@@ -134,7 +134,7 @@ public class EpisodeModel {
         }
 
         @Override
-        public void setImage(ImageIcon image) {
+        public void setImage(Image image) {
             this.image = image;
         }
 

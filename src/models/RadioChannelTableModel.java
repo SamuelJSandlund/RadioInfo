@@ -9,27 +9,14 @@ import java.util.List;
  * A table model that defines how information about the episodes on a radio channel
  * should be displayed in a table
  * @author Samuel Sandlund
- * @version 1.0
- * @since 2023-01-08
+ * @version 2.0 ability to switch episode list removed, episodes is now final
+ * @since 2023-02-07
  */
 public class RadioChannelTableModel extends AbstractTableModel {
-    private List<EpisodeModel> episodes;
-    private String channelName;
+    private final List<EpisodeModel> episodes;
 
-    public RadioChannelTableModel(List<EpisodeModel> episodes, String channelName){
+    public RadioChannelTableModel(List<EpisodeModel> episodes){
         this.episodes = episodes;
-        this.channelName = channelName;
-    }
-
-    /**
-     * Updates the list of episodes that this table model has
-     * This model is synchronized since multiple threads could be trying to update the
-     * table at the same time
-     * @param newEpisodes the new list of episodes
-     */
-    public synchronized void updateEpisodeList(List<EpisodeModel> newEpisodes){
-        episodes = newEpisodes;
-        this.fireTableDataChanged();
     }
 
     /**
@@ -46,13 +33,6 @@ public class RadioChannelTableModel extends AbstractTableModel {
      */
     public EpisodeModel getEpisode(int index){
         return episodes.get(index);
-    }
-
-    /**
-     * @return the name of the channel that the episodes in the table are broadcast on
-     */
-    public String getChannelName(){
-        return channelName;
     }
 
     @Override

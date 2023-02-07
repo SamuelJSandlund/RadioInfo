@@ -1,17 +1,17 @@
 package models;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * A class to store information about the current episodes on channels that
  * the program has already gotten from the API.
  * Used to reduce the amount of API-calls required.
  * @author Samuel Sandlund
- * @version 1.1 the class now extends HashMap and could be replaced by a HashMap<Integer, RadioChannelTableModel>
- * @since 2023-01-08
+ * @version 2.0 class now extends thread-safe ConcurrentHashMap instead of regular HashMap
+ * @since 2023-02-07
  */
-public class EpisodeListCache extends HashMap<Integer, RadioChannelTableModel>{
+public class EpisodeListCache extends ConcurrentHashMap<Integer, List<EpisodeModel>> {
 
     /**
      * Saves a new channel and its list of episodes
@@ -19,7 +19,7 @@ public class EpisodeListCache extends HashMap<Integer, RadioChannelTableModel>{
      * @param episodeList the list of episodes for the channelModel (a TableModel for this list is saved as value)
      */
     public void saveEpisodeList(ChannelModel channelModel, List<EpisodeModel> episodeList){
-        this.put(channelModel.getId(), new RadioChannelTableModel(episodeList, channelModel.getName()));
+        this.put(channelModel.getId(), episodeList);
     }
 
     /**
@@ -36,7 +36,7 @@ public class EpisodeListCache extends HashMap<Integer, RadioChannelTableModel>{
      * @param channelId id of the channel to get RadioChannelTableModel for
      * @return TableModel for the episodes on the channel with the given id.
      */
-    public RadioChannelTableModel getEpisodeList(int channelId){
+    public List<EpisodeModel> getEpisodeList(int channelId){
         return this.get(channelId);
     }
 }

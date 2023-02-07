@@ -7,8 +7,8 @@ package models;
  * @since 2023-01-08
  */
 public class ChannelModel {
-    private int id;
-    private String name;
+    private final int id;
+    private final String name;
 
     public ChannelModel(int id, String name){
         this.id = id;
